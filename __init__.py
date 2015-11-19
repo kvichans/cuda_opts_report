@@ -11,6 +11,8 @@ import  cudatext        as app
 from    cudatext    import ed
 import  cudax_lib       as apx
 
+pass;                           LOG = (-2==-2)  # Do or dont logging.
+
 RPT_HEAD = '''
 <html>
 <head>
@@ -58,7 +60,8 @@ def do_report(fn):
     def_json    = os.path.join(apx.get_def_setting_dir()         , 'default.json')
     usr_json    = os.path.join(app.app_path(app.APP_DIR_SETTINGS), 'user.json')
     lex_json    = os.path.join(app.app_path(app.APP_DIR_SETTINGS), 'lexer {}.json'.format(lex))
-    def_opts    = apx.get_app_default_opts(         object_pairs_hook=collections.OrderedDict)
+    def_opts    = apx.get_app_default_opts()
+#   def_opts    = apx.get_app_default_opts(         object_pairs_hook=collections.OrderedDict)
     usr_opts    = apx._get_file_opts(usr_json, {},  object_pairs_hook=collections.OrderedDict)
 #   pass;                      apx.log('usr_opts=\n{}', usr_opts)
     lex_opts    = apx._get_file_opts(lex_json, {},  object_pairs_hook=collections.OrderedDict)
@@ -70,13 +73,18 @@ def do_report(fn):
     def_body    = def_body.replace('\r\n', '\n').replace('\r', '\n')
     def_body    = def_body[def_body.find('{')+1:]   # Cut head with start '{'
     def_body    = def_body.lstrip()
+    pass;                      #LOG and apx.log('pr for def_body={}',def_body[:50])
     for opt in def_opts.keys():
         pos_opt = def_body.find('"{}"'.format(opt))
+        pass;                  #LOG and apx.log('opt, pos_opt={}',(opt, pos_opt))
         cmt     = def_body[:pos_opt].strip()
         cmt     = re.sub('^\s*//', '', cmt, flags=re.M)
         cmt     = cmt.strip()
+        pass;                  #LOG and apx.log('cmt={}',cmt)
         cmt_opts[opt]    = html.escape(cmt)
         def_body= def_body[def_body.find('\n', pos_opt)+1:]   # Cut the opt
+        pass;                  #LOG and apx.log('pr for def_body={}',def_body[:50])
+       #pass;                   return False
 
     with open(fn, 'w', encoding='utf8') as f:
         f.write(RPT_HEAD)
@@ -158,6 +166,7 @@ def do_report(fn):
             lex_opts.pop(opt, None)
         f.write('</table><br/>\n')
         f.write(RPT_FOOT)
+        return True
    #def do_report(fn):
 
 def get_ovrd_ed_opts(ed):
@@ -177,8 +186,8 @@ class Command:
        #pass;                   apx.log('??')
        #pass;                   apx.log('apx.get_def_setting_dir()={}',apx.get_def_setting_dir())
         htm_file = os.path.join(tempfile.gettempdir(), 'CudaText_overided_options.html')
-        do_report(htm_file)
-        webbrowser.open_new_tab('file://'+htm_file)
-        app.msg_status('Opened browser with file '+htm_file)
+        if do_report(htm_file):
+            webbrowser.open_new_tab('file://'+htm_file)
+            app.msg_status('Opened browser with file '+htm_file)
        #pass;                   apx.log('ok')
 
