@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on githab)
 Version:
-    '0.1.1 2015-11-12'
+    '0.9.1 2015-11-19'
 '''
 #! /usr/bin/env python3
 
@@ -60,14 +60,16 @@ def do_report(fn):
     def_json    = os.path.join(apx.get_def_setting_dir()         , 'default.json')
     usr_json    = os.path.join(app.app_path(app.APP_DIR_SETTINGS), 'user.json')
     lex_json    = os.path.join(app.app_path(app.APP_DIR_SETTINGS), 'lexer {}.json'.format(lex))
-    def_opts    = apx.get_app_default_opts()
+
+#   def_opts    = apx.get_app_default_opts()
 #   pass;                       LOG and log('?? get_app_default_opts')
 #   def_opts    = apx.get_app_default_opts(         object_pairs_hook=collections.OrderedDict)
     
-    if 'font_name' != list(def_opts.keys())[0]:
-        pass;                   apx.log('Not natural order')
-        return False
+#   if 'font_name' != list(def_opts.keys())[0]:
+#       pass;                   apx.log('Not natural order')
+#       return False
     
+    def_opts    = apx._get_file_opts(def_json, {},  object_pairs_hook=collections.OrderedDict)
     usr_opts    = apx._get_file_opts(usr_json, {},  object_pairs_hook=collections.OrderedDict)
     lex_opts    = apx._get_file_opts(lex_json, {},  object_pairs_hook=collections.OrderedDict)
 
