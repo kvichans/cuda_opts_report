@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on githab)
 Version:
-    '0.9.1 2015-11-19'
+    '1.0.1 2015-11-24'
 '''
 #! /usr/bin/env python3
 
@@ -95,6 +95,7 @@ def do_report(fn):
 
     with open(fn, 'w', encoding='utf8') as f:
         f.write(RPT_HEAD)
+        f.write('<h4>Hign priority: editor options</h4>')
         f.write('<table>\n')
         f.write(	'<tr>\n')
         f.write(	'<th>Option name</th>\n')
@@ -122,6 +123,7 @@ def do_report(fn):
             usr_opts.pop(opt, None)
             lex_opts.pop(opt, None)
         f.write('</table><br/>\n')
+        f.write('<h4>Overridden default options</h4>')
         f.write('<table>\n')
         f.write(	'<tr>\n')
         f.write(	'<th>Option name</th>\n')
@@ -145,6 +147,7 @@ def do_report(fn):
             usr_opts.pop(opt, None)
             lex_opts.pop(opt, None)
         f.write('</table><br/>\n')
+        f.write('<h4>Overridden user-only options</h4>')
         f.write('<table>\n')
         f.write(	'<tr>\n')
         f.write(	'<th>Option name</th>\n')
