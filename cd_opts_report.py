@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on githab)
 Version:
-    '1.0.2 2015-12-15'
+    '1.0.3 2017-02-05'
 '''
 #! /usr/bin/env python3
 
@@ -88,6 +88,7 @@ def do_report(fn):
     for opt in def_opts.keys():
         pos_opt = def_body.find('"{}"'.format(opt))
         cmt     = def_body[:pos_opt].strip()
+        cmt     = ('\n\n'+cmt).split('\n\n')[-1]
         cmt     = re.sub('^\s*//', '', cmt, flags=re.M)
         cmt     = cmt.strip()
         cmt_opts[opt]    = html.escape(cmt)
@@ -95,7 +96,7 @@ def do_report(fn):
 
     with open(fn, 'w', encoding='utf8') as f:
         f.write(RPT_HEAD)
-        f.write('<h4>Hign priority: editor options</h4>')
+        f.write('<h4>High priority: editor options</h4>')
         f.write('<table>\n')
         f.write(	'<tr>\n')
         f.write(	'<th>Option name</th>\n')
@@ -195,7 +196,7 @@ class Command:
     def run(self):
        #pass;                   apx.log('??')
        #pass;                   apx.log('apx.get_def_setting_dir()={}',apx.get_def_setting_dir())
-        htm_file = os.path.join(tempfile.gettempdir(), 'CudaText_overided_options.html')
+        htm_file = os.path.join(tempfile.gettempdir(), 'CudaText_option_report.html')
         if do_report(htm_file):
             webbrowser.open_new_tab('file://'+htm_file)
             app.msg_status('Opened browser with file '+htm_file)
